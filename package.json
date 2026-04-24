@@ -1,0 +1,22 @@
+{
+  "name": "daily-assistant",
+  "version": "1.0.0",
+  "description": "Daily assistant with Telegram bot and CalDAV sync",
+  "main": "src/index.js",
+  "scripts": {
+    "bot": "node src/bot.js",
+    "noon-reminder": "node src/routines/sunday-noon-reminder.js",
+    "weekly-recap": "node src/routines/weekly-recap.js",
+    "weekly-plan": "node src/routines/weekly-planner.js",
+    "daily-plan": "node src/routines/daily-planner.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.20.0",
+    "dotenv": "^16.0.3",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {},
+  "keywords": ["telegram", "calendar", "daily"],
+  "author": "AI Assistant",
+  "license": "MIT"
+}
