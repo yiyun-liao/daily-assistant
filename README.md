@@ -1,254 +1,108 @@
-# 📅 Daily Assistant - 日常管理系統
+# Daily Assistant
 
-一個為前端工程師設計的 **完整日常規劃系統**，集成 Telegram、iCloud Calendar、番茄鐘規劃和職涯指導。
+An AI-powered personal planning system that automates weekly/daily scheduling through Claude API, syncs with iCloud Calendar via CalDAV, and communicates through a Telegram bot.
 
-## 👤 用戶資料
+## Problem
 
-詳見 **[config/user-profile.md](config/user-profile.md)**
+Manual time management doesn't scale when juggling multiple goals with different deadlines and priorities. Existing tools (Google Calendar, Notion) require constant manual input and don't adapt plans based on what's already on your calendar.
 
-快速摘要：
-- 🎯 **身份**: 前端工程師 (6 個月經驗)
-- 💰 **目標年薪**: 120 萬
-- ✈️ **當前項目**: 宿霧語言留學準備 (5/3-6/3)
-- ⏰ **重要截止**: 4/27 面試、5/3 出發
+## Solution
 
----
+A fully automated planning pipeline that:
 
-## 🤖 核心功能
+1. **Reads** existing events from iCloud calendars (CalDAV protocol)
+2. **Generates** conflict-free weekly/daily plans using Claude AI, respecting time slots and capacity limits
+3. **Delivers** plans via Telegram and lets users confirm or adjust interactively
+4. **Writes** confirmed plans back to a dedicated iCloud calendar
 
-### 1️⃣ 自動化規劃系統
-
-| 時間 | 觸發器 | 功能 |
-|------|--------|------|
-| **每天 08:00** | Daily Telegram Briefing | 當日規劃 (番茄鐘方式) |
-| **周日 12:00** | Sunday Noon Reminder | 行事曆更新提醒 |
-| **周日 22:00** | Sunday 10PM Weekly Plan | 下週規劃 + Telegram 討論 |
-| **周一 08:00** | Weekly iCloud Sync | 同步至 iCloud「AI Assistant」日歷 |
-
-### 2️⃣ AI Agents
-
-**秘書角色** - 時間管理、PM、費用規劃
-- 根據優先級安排任務
-- Token 有限意識強
-- 考慮用戶身心狀態
-
-**職涯導師角色** - 人生規劃建議
-- 中立的職涯決策分析
-- 目標年薪 120 萬的路線規劃
-- 技能發展建議
-
-### 3️⃣ 規劃特色
-
-✅ **番茄鐘方式**
-- 25 分鐘工作 + 5 分鐘短休息
-- 4 個番茄鐘後 15-20 分鐘長休息
-- 保留彈性和準備時間
-
-✅ **日程保護**
-- 避開已有計劃 (wehelp、說明會、面試等)
-- 可讀取其他日歷但只編輯「AI Assistant」日歷
-- 智慧地安排新事項
-
-✅ **互動討論**
-- 每日早上可微調當天規劃
-- 周日晚上可討論和調整下週計劃
-- 用戶反饋自動記錄到記憶系統
-
----
-
-## 📁 項目結構
+## How It Works
 
 ```
-daily-assistant/
-├── README.md                 # 項目總覽
-├── USER_PROFILE.md          # 用戶資料、目標、時間線
-├── .gitignore               # 敏感文件排除
-├── .env                      # 環境變數 (敏感，已 gitignore)
-├── package.json             # Node.js 依賴
-├── src/
-│   ├── daily-planner.js     # 規劃引擎 (當日/週規劃)
-│   ├── telegram-bot.js      # Telegram 整合
-│   └── caldav-sync.js       # iCloud CalDAV 同步
-├── calendar/
-│   ├── 工作.ics            # 工作行事曆
-│   ├── 行事曆.ics          # 個人行事曆
-│   └── 宿霧留學計劃.md     # 宿霧詳細計劃
-├── .claude/
-│   ├── agents/              # AI 子代理定義
-│   │   ├── secretary.md     # 秘書 Agent
-│   │   └── career-coach.md  # 職涯導師 Agent
-│   ├── commands/            # 自訂命令
-│   │   └── daily-briefing.md
-│   ├── hooks/               # 自動化觸發器
-│   ├── rules/               # 行為規範
-│   └── skills/              # 進階工作腳本
-└── memory/                   # 記憶系統 (持久化)
-    ├── MEMORY.md            # 記憶索引
-    ├── user_role.md         # 用戶身份
-    ├── career_goals.md      # 職涯目標
-    ├── project_cebu_study.md # 宿霧項目
-    └── planning_system.md   # 規劃系統偏好
+Sunday 12:00  ─→  Telegram reminder to update calendar
+Sunday 21:55  ─→  AI weekly recap (reviews progress vs. plan)
+Sunday 22:00  ─→  AI weekly plan → Telegram → user confirms → write to iCloud
+Daily  08:00  ─→  AI pomodoro schedule for the day (based on weekly plan)
+Anytime       ─→  Interactive Telegram bot for Q&A and goal editing
 ```
 
----
+### Planning Rules
 
-## 🚀 使用方式
+- Three time slots: morning (09:30-13:00), afternoon (14:00-17:00), evening (19:00-22:00)
+- Never conflicts with existing calendar events
+- Schedules 80% of available time, keeps 20% as buffer
+- Higher priority tasks go to peak energy slots
+- Daily plans use pomodoro technique (25min work + 5min rest)
 
-### 啟動系統
+## Architecture
 
-1. **安裝依賴**
+```
+src/
+├── bot.js                          # Telegram polling bot (interactive)
+├── lib/
+│   ├── ai.js                       # Claude API wrapper + agent loader
+│   ├── caldav.js                   # iCloud CalDAV read/write (raw HTTP)
+│   ├── calendar.js                 # Calendar query layer
+│   ├── goals.js                    # Goal/schedule utilities
+│   └── telegram.js                 # Telegram API utilities
+└── routines/
+    ├── daily-planner.js            # Daily pomodoro generation
+    ├── weekly-planner.js           # Weekly plan generation
+    ├── weekly-planner-sync.js      # Sync confirmed plan → iCloud
+    ├── weekly-recap.js             # Weekly progress recap
+    └── sunday-noon-reminder.js     # Calendar update reminder
+
+.claude/agents/                     # AI agent persona definitions (system prompts)
+config/                             # User profile & goals (gitignored)
+```
+
+### AI Agents
+
+Agent definitions live in `.claude/agents/` as Markdown files, loaded as system prompts at runtime. This separates prompt engineering from application logic.
+
+- **Secretary** - Core agent. Weekly/daily planning, pomodoro scheduling, calendar-aware task allocation. All planning rules are defined here.
+- **Career Coach** - Career advice and decision analysis.
+- **Goal Editor** - Goal tracking via Telegram commands (`/goal review`, `/goal list`, mark tasks done).
+
+### Key Design Decisions
+
+- **CalDAV from scratch** - No SDK; raw HTTP requests to iCloud's CalDAV endpoint for full control over calendar read/write
+- **Prompt centralization** - All AI behavior rules live in agent `.md` files, not scattered across JS. Routines only assemble data context.
+- **Confirm-before-write** - Weekly plans are sent to Telegram for user review. Only written to calendar after explicit confirmation.
+- **Graceful degradation** - If iCloud is unreachable (timeout after 15s), bot still responds without calendar data instead of hanging.
+
+## Setup
+
+1. Install dependencies:
    ```bash
    npm install
    ```
 
-2. **設置環境變數** (.env)
+2. Create `.env`:
    ```
-   TELEGRAM_BOT_TOKEN=your_token
-   TELEGRAM_CHAT_ID=your_chat_id
-   CLAUDE_API_KEY=your_api_key
-   ICAL_PASSWORD=your_icloud_password
-   ```
-
-3. **查看今日規劃**
-   ```bash
-   node src/daily-planner.js
+   TELEGRAM_BOT_TOKEN=
+   TELEGRAM_CHAT_ID=
+   CLAUDE_API_KEY=
+   ICAL_USER=
+   ICAL_USER_ID=
+   ICAL_PASSWORD=
+   ICAL_CALENDAR_IDS={}
    ```
 
-4. **查看本週規劃**
-   ```bash
-   node src/daily-planner.js --weekly
-   ```
+3. Create `config/user-profile.md` with your personal info and goals.
 
-### Telegram 互動
+## Usage
 
-- **每天早上 08:00** - 接收當日規劃
-  - 在 Telegram 回覆調整需求
-  - 例：「今天想多花時間在 XXX」
-
-- **周日中午 12:00** - 收到行事曆更新提醒
-  - 告訴系統下週有什麼新計劃
-
-- **周日晚上 22:00** - 收到下週規劃
-  - 討論和確認下週安排
-  - 提出優先級調整
-
----
-
-## 📊 優先級順序
-
-```
-⭐⭐⭐ 完成代碼 Repo (Token 優先)
-⭐⭐⭐ 面試準備 (4/27 截止)
-⭐⭐ 雅思練習 (持續進行)
-⭐⭐ PADI & 行李準備 (5/2 前)
-⭐ 回家探親 (4/28-4/30)
+```bash
+npm run bot            # Start interactive Telegram bot
+npm run daily-plan     # Generate today's pomodoro plan
+npm run weekly-plan    # Generate next week's plan
+npm run weekly-recap   # Generate this week's recap
+npm run noon-reminder  # Send calendar update reminder
 ```
 
----
+## Tech Stack
 
-## 🎯 短期目標 (4/18 - 5/3)
-
-### 關鍵日期
-- **4/19**: Do wehelp
-- **4/21**: 宿霧課程說明會
-- **4/27**: ⚡ **面試日期**
-- **4/28-4/30**: 回家探親 2.5 天
-- **5/3**: ✈️ 出發宿霧
-
-### 必須完成
-1. ✅ 完成代碼 Repo
-2. ✅ 面試準備 & 通過
-3. ✅ 雅思開始練習
-4. ✅ PADI eLearning
-5. ✅ 行李準備
-
----
-
-## 📱 遠程代理 (Triggers)
-
-所有代理已配置在 Claude Code 中，自動執行：
-
-| Trigger ID | 名稱 | 狀態 |
-|-----------|------|------|
-| `trig_01UcnHDuph6sKU93texLBkLf` | Daily Telegram Briefing | ✅ 啟用 |
-| `trig_01AZdGbdfmSdXBEQpbUDGC5M` | Sunday Noon Reminder | ✅ 啟用 |
-| `trig_01SudHgHJcwsBBk2NWx8WZdp` | Sunday 10PM Weekly Plan | ✅ 啟用 |
-| `trig_01CBA9RTEagoy94ZL6yfLwbt` | Weekly iCloud Sync | ✅ 啟用 |
-
-管理地址: https://claude.ai/code/scheduled
-
----
-
-## 💾 記憶系統
-
-所有用戶反饋和目標自動記錄到 `memory/` 目錄，用於：
-- 長期目標追踪
-- 優先級調整
-- 職涯決策參考
-
-詳見 `memory/MEMORY.md`
-
----
-
-## 🔐 安全性
-
-- ✅ `.gitignore` 排除敏感文件 (.env、node_modules 等)
-- ✅ iCloud Calendar 只編輯「AI Assistant」日歷
-- ✅ Telegram token 和 iCloud 密碼存放在 .env (不版控)
-- ✅ Claude API key 安全存放
-
----
-
-## 📈 效果預期
-
-### 日常層面
-- 每天清晨知道優先任務
-- 隨時可微調日程
-- 自動避開已有計劃
-
-### 周層面
-- 每周日獲得完整規劃
-- 與秘書討論和優化
-- 自動同步到 iCloud
-
-### 月層面
-- 追踪進度和完成度
-- 調整優先級
-- 職涯決策支持
-
----
-
-## 🛠️ 技術棧
-
-- **Node.js** - 後端運行時
-- **Telegram API** - 消息推送
-- **CalDAV** - iCloud 日歷同步
-- **Claude API** - AI 規劃和決策
-- **Git** - 版本控制
-
----
-
-## 📞 聯絡方式
-
-- 💬 **Telegram** - 日常簽到和討論
-- 📅 **iCloud Calendar** - 日程同步
-- 🧠 **Memory System** - 目標記錄
-- 📊 **USER_PROFILE.md** - 用戶資訊
-
----
-
-## 📝 更新日誌
-
-- **2026-04-18** - 系統初始化完成
-  - ✅ Telegram 自動化
-  - ✅ iCloud CalDAV 同步
-  - ✅ 番茄鐘規劃
-  - ✅ AI Agents (秘書 & 職涯導師)
-  - ✅ 記憶系統
-  - ✅ 用戶資訊整理
-
----
-
-**準備好開始了嗎？** 🚀
-
-明天早上 8:00 接收第一條 Telegram 簽到！
+- **Node.js** - Runtime
+- **Claude API** (Anthropic) - AI planning and responses
+- **Telegram Bot API** - Messaging interface
+- **CalDAV** (iCloud) - Calendar sync via raw HTTP
