@@ -13,10 +13,14 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.20.0",
     "dotenv": "^16.0.3",
+    "node-cron": "^4.2.1",
     "uuid": "^9.0.0"
   },
-  "devDependencies": {},
-  "keywords": ["telegram", "calendar", "daily"],
+  "keywords": [
+    "telegram",
+    "calendar",
+    "daily"
+  ],
   "author": "AI Assistant",
   "license": "MIT"
 }

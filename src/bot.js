@@ -7,6 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const cron = require('node-cron');
 const { sendMessage, getUpdates } = require('./lib/telegram');
 const { chat, buildSystemPrompt } = require('./lib/ai');
 const { putEvents } = require('./lib/caldav');
@@ -244,7 +245,83 @@ async function pollingLoop() {
   }
 }
 
+// ─────────────────────────────────────────────
+// Scheduled routines (Asia/Taipei)
+// ─────────────────────────────────────────────
+
+function scheduleRoutines() {
+  const opts = { timezone: 'Asia/Taipei' };
+
+  // 每天 08:00 — 番茄鐘計畫
+  cron.schedule('0 8 * * *', async () => {
+    console.log('⏰ [cron] 觸發: daily-plan');
+    try {
+      const { generateDailyPlan } = require('./routines/daily-planner');
+      const plan = await generateDailyPlan();
+      const dateStr = new Date().toLocaleDateString('zh-TW');
+      let msg = `🍅 <b>${dateStr} 番茄鐘計畫</b>\n═════════════════════\n\n`;
+      msg += plan;
+      msg += `\n\n═════════════════════`;
+      await sendMessage(msg);
+      console.log('✅ [cron] daily-plan 已發送');
+    } catch (err) {
+      console.error('❌ [cron] daily-plan 失敗:', err.message);
+    }
+  }, opts);
+
+  // 週日 12:00 — 提醒更新行事曆
+  cron.schedule('0 12 * * 0', async () => {
+    console.log('⏰ [cron] 觸發: noon-reminder');
+    try {
+      const { generateNoonReminder } = require('./routines/sunday-noon-reminder');
+      await sendMessage(generateNoonReminder());
+      console.log('✅ [cron] noon-reminder 已發送');
+    } catch (err) {
+      console.error('❌ [cron] noon-reminder 失敗:', err.message);
+    }
+  }, opts);
+
+  // 週日 21:55 — 週回顧
+  cron.schedule('55 21 * * 0', async () => {
+    console.log('⏰ [cron] 觸發: weekly-recap');
+    try {
+      const { generateWeeklyRecap } = require('./routines/weekly-recap');
+      const recap = await generateWeeklyRecap();
+      const header = `📊 <b>本週回顧</b>\n═════════════════════\n\n`;
+      const footer = `\n\n═════════════════════\n🤖 5 分鐘後將生成下週規劃`;
+      await sendMessage(header + recap + footer);
+      console.log('✅ [cron] weekly-recap 已發送');
+    } catch (err) {
+      console.error('❌ [cron] weekly-recap 失敗:', err.message);
+    }
+  }, opts);
+
+  // 週日 22:00 — 下週規劃
+  cron.schedule('0 22 * * 0', async () => {
+    console.log('⏰ [cron] 觸發: weekly-plan');
+    try {
+      const { generateWeeklyPlan, savePlan, savePendingSync, formatTelegramMessage } = require('./routines/weekly-planner');
+      const plan = await generateWeeklyPlan();
+      if (plan) {
+        savePlan(plan);
+        savePendingSync();
+        await sendMessage(formatTelegramMessage(plan));
+        console.log('✅ [cron] weekly-plan 已發送');
+      }
+    } catch (err) {
+      console.error('❌ [cron] weekly-plan 失敗:', err.message);
+    }
+  }, opts);
+
+  console.log('📅 排程已啟動:');
+  console.log('   • 每天 08:00 — 番茄鐘計畫');
+  console.log('   • 週日 12:00 — 行事曆更新提醒');
+  console.log('   • 週日 21:55 — 週回顧');
+  console.log('   • 週日 22:00 — 下週規劃');
+}
+
 if (require.main === module) {
+  scheduleRoutines();
   pollingLoop().catch(err => { console.error('❌ Bot 錯誤:', err); process.exit(1); });
 }
 
