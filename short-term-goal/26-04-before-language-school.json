@@ -1,0 +1,197 @@
+{
+  "period": "2026-04-18 ~ 2026-05-03",
+  "description": "宿霧留學出發前準備期",
+  "start_date": "2026-04-18",
+  "end_date": "2026-05-03",
+  "last_updated": "2026-04-20",
+
+  "schedule_config": {
+    "morning_start": "09:30",
+    "morning_end": "13:00",
+    "afternoon_start": "14:00",
+    "afternoon_end": "17:00",
+    "evening_start": "19:00",
+    "evening_end": "22:00"
+  },
+
+  "weekly_recurring": [],
+
+  "task_classification": {
+    "daily_must": ["完成代碼 Repo（含 RAG）", "面試準備", "雅思練習"],
+    "time_block": ["PADI eLearning", "行李準備"]
+  },
+
+  "priorities": [
+    {
+      "rank": 1,
+      "name": "完成代碼 Repo（Stock Repo）",
+      "type": "daily",
+      "duration": "每日 3-4 小時（早上優先）",
+      "deadline": "2026-05-02",
+      "reason": "面試前要有可展示的作品，含部署上線",
+      "status": "進行中",
+      "remaining_tasks": [
+        { "task": "merge feature/add-api-logging → main", "estimate": "30 分鐘", "priority": "最優先" },
+        { "task": "投資哲學注入 AnalyzerAgent（P/E、RSI、EPS）", "estimate": "1-2 小時", "priority": "高" },
+        { "task": "Telegram Bot 互動問答（/ask、/analyze）", "estimate": "3-4 小時", "priority": "高" },
+        { "task": "Railway + Vercel 部署設定", "estimate": "1-2 小時", "priority": "高" },
+        { "task": "RAG 知識庫（向量化 + 自然語言查詢）", "estimate": "1-2 天", "priority": "中" }
+      ],
+      "daily_plan": {
+        "4/20": "Merge 分支 + 投資哲學注入 AnalyzerAgent",
+        "4/21": "Telegram Bot 開始",
+        "4/22": "Telegram Bot 完成",
+        "4/23": "Railway + Vercel 部署",
+        "4/24": "RAG 開始",
+        "4/25": "RAG 完成",
+        "4/26": "Buffer / 收尾"
+      },
+      "note": "RAG 若 4/24 開始卡關，優先確保其他核心功能部署完成，面試過了更重要"
+    },
+    {
+      "rank": 2,
+      "name": "面試準備",
+      "type": "daily",
+      "duration": "每日 1-2 小時（下午/晚上），4/25-4/27 加強",
+      "deadline": "2026-04-27",
+      "reason": "4/27 面試，目標年薪 120 萬",
+      "status": "進行中",
+      "interview_info": {
+        "format": "線上機上考試 + 面試",
+        "exam_note": "可使用 AI，但需理解原理與邏輯",
+        "salary_suggestion": "起薪建議從 $2500 USD 往上開，HR 有自己的年資平移機制",
+        "key_highlight": "有元件庫經驗是超級加分點，對方公司正在建立元件庫，務必主動提"
+      },
+      "prep_priorities": [
+        {
+          "priority": "第一優先（面試直接考、影響薪水）",
+          "items": [
+            "TypeScript 泛型和 utility types：Partial、Pick、Omit、Record、infer",
+            "Todo List CRUD 實作練習：fetch/axios 打 REST API，完整增刪改查 + 排序 + 統計",
+            "LeetCode easy 流暢，medium array/string/hashmap 理解思路"
+          ]
+        },
+        {
+          "priority": "第二優先（強化 mid-level 論述）",
+          "items": [
+            "React 效能：useMemo、useCallback、React.memo 的實際使用時機，能分析 re-render 問題",
+            "寫測試：補幾個 unit test，面試能說「我寫過 MobX store 的 unit test」",
+            "自我介紹：強調元件庫經驗，準備薪資談判話術"
+          ]
+        },
+        {
+          "priority": "第三優先（加分，非硬門檻）",
+          "items": [
+            "CI/CD 基礎概念：GitHub Actions 跑測試和 deploy，理解流程就夠",
+            "個人架構的 side project：Stock Repo 即是，部署後直接展示"
+          ]
+        }
+      ],
+      "daily_plan": {
+        "4/20": "TypeScript utility types 速讀",
+        "4/21": "LeetCode easy 3 題 + 自我介紹草稿",
+        "4/22": "LeetCode easy 繼續 + Todo API 實作練習",
+        "4/23": "React 效能概念 + 面試考題整理",
+        "4/24": "LeetCode medium array/hashmap",
+        "4/25": "自我介紹 + 面試考題模擬",
+        "4/26": "面試全程模擬 + 薪資談判話術"
+      }
+    },
+    {
+      "rank": 3,
+      "name": "雅思練習",
+      "type": "daily",
+      "duration": "每日 1 小時",
+      "deadline": "持續進行，宿霧課程加強",
+      "reason": "I.BREEZE 入學分班考試，目標直接進入 IELTS Target 班",
+      "status": "進行中",
+      "background": "10 年前多益 700，對應 IELTS 約 4.5-5.0，遠超入班門檻（IELTS 3.5），主要目標是熟悉格式",
+      "school_info": {
+        "name": "I.BREEZE International Language Center",
+        "location": "宿霧，距機場 20 分鐘",
+        "target_class": "IELTS Target 班",
+        "entrance_requirement": "IELTS 3.5 / TOEIC 350 / I.BREEZE Level A2",
+        "class_content": "每日 5 堂一對一（口說、聽力、閱讀、寫作）+ 3 堂團體課 + 每週模擬考",
+        "idp_partner": true,
+        "note": "校區距 IDP 官方考場步行 7 分鐘，就讀 12 週以上可參加免費官方考試"
+      },
+      "prep_strategy": {
+        "goal": "到宿霧時不陌生，入學能直接分到 IELTS Target 班",
+        "note": "多益主要考聽力閱讀，雅思多了口說和寫作，這兩個是台灣期間需提前熟悉的",
+        "listening_reading": "有底子，看格式 + 少量練習即可",
+        "speaking": "熟悉 Part 1 常見問題（自我介紹、日常話題），練習用英文自然回答",
+        "writing": "了解 Task 1（圖表描述）和 Task 2（論說文）的基本架構",
+        "first_action": "YouTube 搜『IELTS introduction for beginners』，看一部 30 分鐘完整介紹影片",
+        "daily_practice": "每天 1 小時，輪流練習各 section，保持語感即可，深度訓練交給宿霧課程"
+      }
+    },
+    {
+      "rank": 4,
+      "name": "PADI eLearning",
+      "type": "time_block",
+      "scheduled_period": "2026-04-28 ~ 2026-04-30（返鄉期間完成）",
+      "duration": "共 8-12 小時，每天 3-4 小時",
+      "deadline": "2026-05-02",
+      "reason": "宿霧前完成線上部分，當地可參加潛水活動",
+      "status": "待開始",
+      "note": "安排在返鄉期間做，不佔用台北的面試/Repo 衝刺時間"
+    },
+    {
+      "rank": 5,
+      "name": "行李準備",
+      "type": "time_block",
+      "scheduled_period": "2026-05-01 ~ 2026-05-02",
+      "duration": "1-2 天",
+      "deadline": "2026-05-02",
+      "reason": "5/3 出發前完成",
+      "status": "待開始"
+    }
+  ],
+
+  "fixed_events": [
+    {
+      "date": "2026-04-19",
+      "title": "Do wehelp",
+      "time": "下午",
+      "priority": "high",
+      "notes": "已規劃事項"
+    },
+    {
+      "date": "2026-04-21",
+      "title": "Do 說明會",
+      "time": "下午 3:30",
+      "priority": "high",
+      "notes": "宿霧課程說明會"
+    },
+    {
+      "date": "2026-04-27",
+      "title": "⚡ 面試日",
+      "time": "全天",
+      "priority": "critical",
+      "notes": "重要面試，起薪建議 $2500 USD 往上開"
+    },
+    {
+      "date": "2026-04-28",
+      "title": "🏠 回家探親開始",
+      "time": "全天",
+      "priority": "medium",
+      "notes": "2.5 天，期間完成 PADI eLearning"
+    },
+    {
+      "date": "2026-05-03",
+      "title": "✈️ 出發宿霧",
+      "time": "08:00",
+      "priority": "critical",
+      "notes": "BR281 出發"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "✈️ 返回台灣",
+      "time": "15:10",
+      "priority": "critical",
+      "notes": "BR282 抵達"
+    }
+  ],
+
+  "notes": "此文件在 5/3 出發前有效。相關資料：語言學校資訊見 26-05-language-school/I.BREEZE_2026_Introduction.pdf"
+}

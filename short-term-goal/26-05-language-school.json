@@ -1,0 +1,126 @@
+{
+  "period": "2026-W18-W23 (5/3-6/3)",
+  "description": "宿霧語言學校期間",
+  "start_date": "2026-05-03",
+  "end_date": "2026-06-03",
+  "notes": "此周期在 5/3 出發到宿霧後激活，自動由系統選擇",
+
+  "priorities": [
+    {
+      "rank": 1,
+      "type": "daily",
+      "name": "語言學校課程",
+      "duration": "每日 4-6 小時",
+      "deadline": "2026-06-03",
+      "reason": "主要學習目標，每日課程為核心時間投入",
+      "status": "待開始"
+    },
+    {
+      "rank": 2,
+      "type": "daily",
+      "name": "課後複習與預習",
+      "duration": "每日 2-3 小時",
+      "deadline": "2026-06-03",
+      "reason": "加強課程理解，保持進度，為回台後雅思準備做基礎",
+      "status": "待開始"
+    },
+    {
+      "rank": 3,
+      "type": "periodic",
+      "frequency": "周末",
+      "name": "宿霧探索與社交",
+      "duration": "周末活動",
+      "deadline": "2026-06-03",
+      "reason": "文化體驗，與同學建立友誼，身心放鬆",
+      "status": "待開始"
+    },
+    {
+      "rank": 4,
+      "type": "periodic",
+      "frequency": "每週",
+      "name": "PADI 潛水實踐",
+      "duration": "每週 4-6 小時",
+      "deadline": "2026-06-03",
+      "reason": "完成 PADI 認證課程，完成宿霧前的計劃",
+      "status": "待開始"
+    },
+    {
+      "rank": 5,
+      "type": "daily",
+      "name": "雅思練習（宿霧期間續進）",
+      "duration": "每日 1 小時",
+      "deadline": "2026-06-03",
+      "reason": "持續進行，為回台後的集中準備奠定基礎",
+      "status": "待開始"
+    }
+  ],
+
+  "fixed_events": [
+    {
+      "date": "2026-05-03",
+      "title": "✈️ 出發宿霧",
+      "time": "08:00",
+      "priority": "critical",
+      "notes": "BR281 出發，台北 → 宿霧（10:50 抵達）"
+    },
+    {
+      "date": "2026-05-03",
+      "title": "🏠 宿舍/homestay 報到",
+      "time": "下午",
+      "priority": "high",
+      "notes": "安排住宿，認識環境"
+    },
+    {
+      "date": "2026-05-04",
+      "title": "🎓 語言學校開課",
+      "time": "09:00",
+      "priority": "critical",
+      "notes": "確認課程時間表，認識老師和同學"
+    },
+    {
+      "date": "2026-05-29",
+      "title": "🏝️ 宿霧期間結束前出遊",
+      "time": "全天",
+      "priority": "medium",
+      "notes": "與同學出遊 2-3 天（跳島、潛水等）"
+    },
+    {
+      "date": "2026-06-02",
+      "title": "🧳 收拾行李",
+      "time": "全天",
+      "priority": "high",
+      "notes": "準備返台"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "✈️ 返回台灣",
+      "time": "12:15",
+      "priority": "critical",
+      "notes": "BR282 出發，宿霧 → 台北（15:10 抵達）"
+    }
+  ],
+
+  "course_info": {
+    "expected_daily_hours": "4-6小時",
+    "typical_schedule": "09:00-15:00（確認中）",
+    "accommodation_options": ["學生宿舍", "homestay"],
+    "cost_estimate": "1,500-2,000 USD",
+    "todo_before_departure": [
+      "確認確切課程時間表",
+      "確認住宿安排（宿舍/homestay）",
+      "獲取課程內容和教材信息",
+      "收集同學聯繫方式"
+    ]
+  },
+
+  "estimated_budget": {
+    "course": "TBD",
+    "accommodation": "100-150 USD/month",
+    "meals": "3-5 USD/day",
+    "transportation": "100 USD",
+    "activities": "200 USD",
+    "emergency_fund": "200 USD",
+    "flights": "Already booked",
+    "total": "1,500-2,000 USD (約45,000-60,000 TWD)"
+  }
+}
