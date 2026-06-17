@@ -23,7 +23,7 @@ function buildSystemPrompt(agentName = 'secretary') {
   return `${agent}\n\n---\n\n## 用戶資料\n${profile}`;
 }
 
-async function chat(systemPrompt, userPrompt, { model = 'claude-sonnet-4-20250514', maxTokens = 4096 } = {}) {
+async function chat(systemPrompt, userPrompt, { model = 'claude-sonnet-4-6', maxTokens = 4096 } = {}) {
   const response = await client.messages.create({
     model,
     max_tokens: maxTokens,

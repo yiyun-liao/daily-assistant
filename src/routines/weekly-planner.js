@@ -190,7 +190,7 @@ ${dailySummary}
 請根據「週規劃」和「規劃原則」的規則生成。生成時間：${generatedAt}`;
 
   console.log('🤖 正在呼叫 Claude AI 生成週規劃...');
-  const plan = await chat(systemPrompt, userPrompt, { model: 'claude-sonnet-4-20250514', maxTokens: 4096 });
+  const plan = await chat(systemPrompt, userPrompt, { model: 'claude-sonnet-4-6', maxTokens: 4096 });
   console.log('✅ AI 生成完成');
   return plan;
 }
