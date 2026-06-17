@@ -24,17 +24,18 @@ async function syncWeeklyPlanToCalendar(weekDate = new Date()) {
   const planContent = fs.readFileSync(filePath, 'utf-8');
 
   const dayMap = new Map();
-  const dayPattern = /###\s+(.+?)\s+\((\d{4}-\d{2}-\d{2})\)/g;
+  const dayPattern = /###\s+.+?(\d{4}-\d{2}-\d{2})/g;
   let dayMatch;
 
   while ((dayMatch = dayPattern.exec(planContent)) !== null) {
-    const dayName = dayMatch[1];
-    const dateStr = dayMatch[2];
+    const dateStr = dayMatch[1];
+    const dayNameMatch = dayMatch[0].match(/(星期[一二三四五六日])/);
+    const dayName = dayNameMatch ? dayNameMatch[1] : dateStr;
     const nextIdx = planContent.indexOf('###', dayMatch.index + 1);
     const daySection = planContent.substring(dayMatch.index, nextIdx === -1 ? undefined : nextIdx);
 
     const tasks = [];
-    const taskPattern = /[✅🍅📌⭐]\s+(.+?)(?:\s*\([^)]*\))?\s*$/gm;
+    const taskPattern = /\|\s*[^|]+\|\s*\S+\s+\*\*(.+?)\*\*/gm;
     let tm;
     while ((tm = taskPattern.exec(daySection)) !== null) {
       const t = tm[1].trim();
