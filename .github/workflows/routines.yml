@@ -1,0 +1,80 @@
+name: Daily Routines
+
+on:
+  schedule:
+    # 每天 08:00 (UTC+8 = 00:00 UTC) — 番茄鐘計畫
+    - cron: '0 0 * * *'
+    # 週日 12:00 (UTC+8 = 04:00 UTC) — 行事曆更新提醒
+    - cron: '0 4 * * 0'
+    # 週日 21:55 (UTC+8 = 13:55 UTC) — 週回顧
+    - cron: '55 13 * * 0'
+    # 週日 22:00 (UTC+8 = 14:00 UTC) — 下週規劃
+    - cron: '0 14 * * 0'
+
+jobs:
+  daily-plan:
+    if: github.event.schedule == '0 0 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: node src/routines/daily-planner.js
+        env:
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ICAL_USER: ${{ secrets.ICAL_USER }}
+          ICAL_PASSWORD: ${{ secrets.ICAL_PASSWORD }}
+          ICAL_USER_ID: ${{ secrets.ICAL_USER_ID }}
+          ICAL_CALENDAR_IDS: ${{ secrets.ICAL_CALENDAR_IDS }}
+
+  noon-reminder:
+    if: github.event.schedule == '0 4 * * 0'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: node src/routines/sunday-noon-reminder.js
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+  weekly-recap:
+    if: github.event.schedule == '55 13 * * 0'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: node src/routines/weekly-recap.js
+        env:
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+  weekly-plan:
+    if: github.event.schedule == '0 14 * * 0'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: node src/routines/weekly-planner.js
+        env:
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ICAL_USER: ${{ secrets.ICAL_USER }}
+          ICAL_PASSWORD: ${{ secrets.ICAL_PASSWORD }}
+          ICAL_USER_ID: ${{ secrets.ICAL_USER_ID }}
+          ICAL_CALENDAR_IDS: ${{ secrets.ICAL_CALENDAR_IDS }}
