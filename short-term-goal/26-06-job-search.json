@@ -1,0 +1,168 @@
+{
+  "period": "2026-06-17 ~ 2026-07-31",
+  "description": "回台灣後找工作週期 — Product Engineer 為主，全力投遞",
+  "start_date": "2026-06-17",
+  "end_date": "2026-07-31",
+  "last_updated": "2026-06-17",
+
+  "schedule_config": {
+    "morning_start": "09:30",
+    "morning_end": "13:00",
+    "afternoon_start": "14:00",
+    "afternoon_end": "17:00",
+    "evening_start": "19:00",
+    "evening_end": "22:00"
+  },
+
+  "weekly_recurring": [],
+
+  "task_classification": {
+    "daily_must": ["投遞職缺", "記錄追蹤表"],
+    "time_block": ["履歷打磨", "機器人開發", "帳號設置"]
+  },
+
+  "priorities": [
+    {
+      "rank": 1,
+      "name": "履歷 + 產品工程師版本",
+      "type": "daily",
+      "duration": "Day 1-2（6/17-6/18）共 8 小時",
+      "deadline": "2026-06-18",
+      "reason": "基礎工具，所有投遞的門票",
+      "status": "進行中",
+      "remaining_tasks": [
+        { "task": "Product Engineer 版本產出", "estimate": "4 小時", "priority": "最優先" },
+        { "task": "兩份履歷導出 PDF 上線", "estimate": "1 小時", "priority": "最優先" }
+      ],
+      "daily_plan": {
+        "6/17": "履歷內容初稿、Product Engineer 調整",
+        "6/18": "最後校稿、PDF 導出、上線確認"
+      }
+    },
+    {
+      "rank": 2,
+      "name": "職缺監控機器人",
+      "type": "time_block",
+      "duration": "Day 3（6/19）共 4-6 小時",
+      "deadline": "2026-06-19",
+      "reason": "自動化蒐集符合條件的職缺，提升效率",
+      "status": "待開始",
+      "remaining_tasks": [
+        { "task": "爬蟲邏輯設計（Wellfound、YC Jobs 等）", "estimate": "2-3 小時", "priority": "高" },
+        { "task": "部署到 Railway / Vercel", "estimate": "1-2 小時", "priority": "高" },
+        { "task": "Telegram 通知整合", "estimate": "1 小時", "priority": "中" }
+      ],
+      "daily_plan": {
+        "6/19": "機器人建好、測試、部署"
+      }
+    },
+    {
+      "rank": 3,
+      "name": "職缺平台帳號 + Alert 設置",
+      "type": "time_block",
+      "duration": "Day 4-5（6/20-6/21）共 3-4 小時",
+      "deadline": "2026-06-21",
+      "reason": "確保不漏掉任何機會，建立主動接收渠道",
+      "status": "待開始",
+      "remaining_tasks": [
+        { "task": "Wellfound 帳號建立 + 篩選條件設好", "estimate": "1 小時", "priority": "最優先" },
+        { "task": "YC Jobs 帳號建立 + alert", "estimate": "0.5 小時", "priority": "最優先" },
+        { "task": "We Work Remotely 帳號建立 + alert", "estimate": "0.5 小時", "priority": "最優先" },
+        { "task": "追蹤表建立（試算表）", "estimate": "1 小時", "priority": "高" }
+      ],
+      "daily_plan": {
+        "6/20": "平台帳號建立、keyword alert 設置",
+        "6/21": "追蹤表建立、開始用追蹤"
+      }
+    },
+    {
+      "rank": 4,
+      "name": "投遞職缺 + Portfolio 打磨",
+      "type": "daily",
+      "duration": "Week 2（6/23-6/29）共 7 天，每天 4-6 小時",
+      "deadline": "2026-06-29",
+      "reason": "核心行動，目標投出 9 個職缺 + 準備 portfolio",
+      "status": "待開始",
+      "remaining_tasks": [
+        { "task": "投遞 T1×1 + T2×5 + T3×3（共 9 個）", "estimate": "7 天分散", "priority": "最優先" },
+        { "task": "每個投遞記進追蹤表（日期、職位、公司、狀態）", "estimate": "7 天分散", "priority": "最優先" },
+        { "task": "Splitly case study 大綱寫出來", "estimate": "2-3 小時", "priority": "高" },
+        { "task": "AmazingTalker 作品合規呈現方式確認", "estimate": "1-2 小時", "priority": "高" }
+      ],
+      "daily_plan": {
+        "6/23": "投遞 T1×1 + portfolio 開始",
+        "6/24": "投遞 T2（前 2 個）",
+        "6/25": "投遞 T2（後 3 個）",
+        "6/26": "投遞 T3（前 2 個）+ Splitly case study",
+        "6/27": "投遞 T3（最後 1 個）+ AmazingTalker 確認",
+        "6/28": "所有投遞完成確認、追蹤表整理",
+        "6/29": "portfolio 最後調整、準備下週策略"
+      },
+      "investment_tiers": {
+        "T1": "夢想公司（1 個）—— 全力打磨、客製化投遞",
+        "T2": "高匹配度（5 個）—— 公司+職位都符合、認真準備",
+        "T3": "試試看（3 個）—— 條件略不符但想嘗試"
+      }
+    },
+    {
+      "rank": 5,
+      "name": "緩衝 + 回顧調整",
+      "type": "time_block",
+      "duration": "最後 3 天（6/30-7/2）",
+      "deadline": "2026-07-02",
+      "reason": "補齊遺漏、檢視投遞結果、為七月做準備",
+      "status": "待開始",
+      "remaining_tasks": [
+        { "task": "補上 Week 2 沒完成的項目", "estimate": "2-3 小時", "priority": "高" },
+        { "task": "回顧投遞結果、整理回覆情況", "estimate": "2 小時", "priority": "高" },
+        { "task": "根據結果調整投遞策略", "estimate": "1-2 小時", "priority": "中" },
+        { "task": "七月節奏規劃", "estimate": "1 小時", "priority": "中" }
+      ],
+      "daily_plan": {
+        "6/30": "補遺漏項目",
+        "7/01": "回顧第一輪投遞",
+        "7/02": "策略調整、七月計畫"
+      }
+    }
+  ],
+
+  "fixed_events": [
+    {
+      "date": "2026-06-17",
+      "title": "⚡ 開始找工作週期",
+      "time": "全天",
+      "priority": "critical",
+      "notes": "履歷 + 機器人開發正式開始"
+    },
+    {
+      "date": "2026-06-19",
+      "title": "🤖 職缺監控機器人完成",
+      "time": "全天",
+      "priority": "high",
+      "notes": "部署完成，開始自動蒐集職缺"
+    },
+    {
+      "date": "2026-06-21",
+      "title": "✅ 所有平台帳號建立完成",
+      "time": "全天",
+      "priority": "high",
+      "notes": "開始用追蹤表記錄"
+    },
+    {
+      "date": "2026-06-23",
+      "title": "🚀 正式投遞開始",
+      "time": "全天",
+      "priority": "critical",
+      "notes": "Week 2 投遞期開始，目標 9 個職缺"
+    },
+    {
+      "date": "2026-06-30",
+      "title": "📊 第一輪投遞完成、回顧開始",
+      "time": "全天",
+      "priority": "high",
+      "notes": "檢視結果、調整策略"
+    }
+  ],
+
+  "notes": "找工作的系統化週期。重點是：(1) 工具準備充足（履歷+機器人+平台）(2) 有紀律投遞 (3) 持續優化 portfolio。假設 7 月會進入面試階段、八月開始新工作或進入下一輪。"
+}
