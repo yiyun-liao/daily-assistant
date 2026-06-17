@@ -325,4 +325,4 @@ if (require.main === module) {
   pollingLoop().catch(err => { console.error('❌ Bot 錯誤:', err); process.exit(1); });
 }
 
-module.exports = { generateResponse, determineAgentType };
+module.exports = { handleMessage, generateResponse, determineAgentType, checkPendingCalendarSync, handleGoalCommand };

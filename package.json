@@ -8,7 +8,8 @@
     "noon-reminder": "node src/routines/sunday-noon-reminder.js",
     "weekly-recap": "node src/routines/weekly-recap.js",
     "weekly-plan": "node src/routines/weekly-planner.js",
-    "daily-plan": "node src/routines/daily-planner.js"
+    "daily-plan": "node src/routines/daily-planner.js",
+    "setup-webhook": "node scripts/setup-webhook.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.20.0",

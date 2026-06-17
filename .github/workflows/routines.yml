@@ -78,3 +78,10 @@ jobs:
           ICAL_PASSWORD: ${{ secrets.ICAL_PASSWORD }}
           ICAL_USER_ID: ${{ secrets.ICAL_USER_ID }}
           ICAL_CALENDAR_IDS: ${{ secrets.ICAL_CALENDAR_IDS }}
+      - name: Commit generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add goal_recap/ config/pending-sync.json
+          git diff --staged --quiet || git commit -m "chore: update weekly plan and pending sync [skip ci]"
+          git push

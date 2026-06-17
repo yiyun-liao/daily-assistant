@@ -50,5 +50,5 @@ calendar/temp/
 
 # Personal data (sensitive)
 config/user-profile.md
-config/pending-sync.json
 26-05-language-school/
+.vercel
